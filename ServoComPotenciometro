@@ -1,0 +1,27 @@
+#include <Servo.h>
+
+Servo garra;  // Cria um objeto Servo
+
+int pinoPot = A1;  // Pino do potenciômetro
+int valorPot;      // Armazena o valor lido do potenciômetro
+int angulo;        // Ângulo calculado para o servo motor
+
+void setup() {
+  garra.attach(8);  // Conecta o servo ao pino digital 9
+  Serial.begin(9600);  // Inicializa a comunicação serial para debug
+}
+
+void loop() {
+  valorPot = analogRead(pinoPot);  // Lê o valor do potenciômetro (0 a 1023)
+  
+  // Converte o valor do potenciômetro para um ângulo entre 0 e 180 graus
+  angulo = map(valorPot, 0, 1023, 0, 180);
+  
+  garra.write(angulo);  // Move o servo para o ângulo calculado
+  Serial.print("Valor do potenciômetro: ");
+  Serial.print(valorPot);
+  Serial.print(" | Ângulo da garra: ");
+  Serial.println(angulo);
+  
+  delay(15);  // Pequeno atraso para suavizar o movimento
+}
